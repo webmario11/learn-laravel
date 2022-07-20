@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="/styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="/styles/responsive.css">
     @yield('custom_css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 
