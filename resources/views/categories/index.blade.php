@@ -94,13 +94,7 @@
                     @endforeach
 
                     </div>
-                    <div class="product_pagination">
-                        <ul>
-                            <li class="active"><a href="#">01.</a></li>
-                            <li><a href="#">02.</a></li>
-                            <li><a href="#">03.</a></li>
-                        </ul>
-                    </div>
+                    {{$products->appends(request()->query())->links('pagination.index')}}
 
                 </div>
             </div>
@@ -190,7 +184,8 @@
                     url: "{{route('showCategory', $cat->alias)}}",
                     type: "GET",
                     data: {
-                        orderBy: orderBy
+                        orderBy: orderBy,
+                        page: {{isset($_GET['page']) ? $_GET['page'] : 1}}
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -199,7 +194,7 @@
                         let positionParameters = location.pathname.indexOf('?');
                         let url = location.pathname.substring(positionParameters, location.pathname.length);
                         let newUrl = url + '?';
-                        newUrl += 'orderBy=' + orderBy;
+                        newUrl += 'orderBy=' + orderBy + "&page={{isset($_GET['page']) ? $_GET['page'] : 1}}";
                         history.pushState({}, '', newUrl);
 
                         $('.product_grid').html(data)
